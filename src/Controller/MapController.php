@@ -25,7 +25,5 @@ class MapController extends AbstractController
         return $this->render('map/map.html.twig', [
             'cities' => $cities,
         ]);
-
-
     }
 }
