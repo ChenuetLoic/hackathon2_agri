@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
-     {{ encore_entry_link_tags('app') }}
+     {{ parent() }}
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
            crossorigin=""/>
@@ -10,16 +10,17 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
+    {{ parent() }}
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script>
             let locations =[];
         {%  for city in cities %}
                  locations.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
         {% endfor %}
-        let map = L.map('mapid').setView([47.878264, 1.9258559], 13);
+        let map = L.map('mapid').setView([47.878264, 1.9258559], 12);
         function initMap() {
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
                 attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
@@ -34,5 +35,15 @@
         let marker = L.marker([locations[i][1], locations[i][2]])
             .bindPopup(locations[i][0])
             .addTo(map);}
+
+            //Geolocation
+            lc = L.control.locate({
+                strings: {
+                    title: "Géolocalisation"
+                },
+                locateOptions: {
+                    maxZoom: 12
+                }
+            }).addTo(map);
     </script>
 {% endblock %}
