@@ -15,11 +15,9 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js"
-            charset="utf-8"></script>
+{#    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>#}
     <script type='text/javascript' src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
-    <script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
+{#    <script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>#}
     <script>
         let lat = 47.878264;
         let lon = 1.9258559;
@@ -27,7 +25,7 @@
         let markerClusters;
         let locations =[];
         {%  for city in cities %}
-            locations.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
+        locations.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
         {% endfor %}
         function initMap() {
             let iconBase = 'http://localhost/carte/icons/';
@@ -38,24 +36,24 @@
                 minZoom: 5,
                 maxZoom: 18
             }).addTo(macarte);
-        for (let i = 0; i < locations.length; i++) {
-            let myIcon = L.icon({
-                iconUrl: iconBase + "autres.png",
-                iconSize: [50, 50],
-                iconAnchor: [25, 50],
-                popupAnchor: [-3, -76],
-            });
-            let marker = L.marker([locations[i][1], locations[i][2]]);
+            for (let i = 0; i < locations.length; i++) {
+                let myIcon = L.icon({
+                    iconUrl: iconBase + "autres.png",
+                    iconSize: [50, 50],
+                    iconAnchor: [25, 50],
+                    popupAnchor: [-3, -76],
+                });
+                let marker = L.marker([locations[i][1], locations[i][2]]);
                 marker.bindPopup(locations[i][0])
                 markerClusters.addLayer(marker);
+            }
+            macarte.addLayer(markerClusters);
         }
-                macarte.addLayer(markerClusters);
-    }
-            window.onload = function(){
-                initMap();
-            };
+        window.onload = function(){
+            initMap();
+        };
 
-            //Geolocation
+/*            //Geolocation
             let lc = L.control.locate({
                 strings: {
                     title: "Géolocalisation"
@@ -75,6 +73,6 @@
                 autoCollapse: true,
                 autoType: false,
                 minLength: 2,
-            }) );
+            }) );*/
     </script>
 {% endblock %}
