@@ -15,6 +15,7 @@
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
     <script>
             let locations =[];
         {%  for city in cities %}
@@ -37,7 +38,7 @@
             .addTo(map);}
 
             //Geolocation
-            lc = L.control.locate({
+            let lc = L.control.locate({
                 strings: {
                     title: "Géolocalisation"
                 },
@@ -45,5 +46,17 @@
                     maxZoom: 12
                 }
             }).addTo(map);
+
+            //search
+            map.addControl( new L.Control.Search({
+                url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+                jsonpParam: 'json_callback',
+                propertyName: 'display_name',
+                propertyLoc: ['lat','lon'],
+                marker: L.circleMarker([0,0],{radius:30}),
+                autoCollapse: true,
+                autoType: false,
+                minLength: 2,
+            }) );
     </script>
 {% endblock %}

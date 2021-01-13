@@ -8,6 +8,7 @@
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.css" />
+            <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
         {% endblock %}
     </head>
     <body>
@@ -15,7 +16,5 @@
     </body>
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@[VERSION]/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-        <script src="https://www.domoritz.de/leaflet-locatecontrol/dist/L.Control.Locate.min.css" charset="utf-8"></script>
     {% endblock %}
 </html>
