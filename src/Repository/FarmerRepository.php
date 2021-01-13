@@ -25,6 +25,7 @@ class FarmerRepository extends ServiceEntityRepository
             ->select('c.city, c.latitude, c.longitude, COUNT(f.id) as farmers')
             ->join('App\Entity\City', 'c', 'WITH', 'c.id=f.city')
             ->groupBy('f.city')
+            ->setMaxResults('50')
             ->getQuery()
             ->getResult()
             ;
