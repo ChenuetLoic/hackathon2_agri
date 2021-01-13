@@ -23,7 +23,7 @@ class CityFixtures extends Fixture implements ContainerAwareInterface
         $filepath = realpath ("./") . "/src/DataFixtures/cities.csv";
 
         $csvData = $serializer->decode(file_get_contents($filepath), 'csv');
-        $i = 0;
+        $i = 1;
 
         foreach ($csvData as $csvLine) {
             $city = new City();
