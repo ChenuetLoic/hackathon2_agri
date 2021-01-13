@@ -22,6 +22,7 @@
     "dependencies": {
         "leaflet-search": "^2.9.9",
         "leaflet.locatecontrol": "^0.72.0",
+        "leaflet.markercluster": "^1.4.1",
         "node-sass": "^4.0.0"
     }
 }
