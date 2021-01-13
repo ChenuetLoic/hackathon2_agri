@@ -16,7 +16,7 @@
             crossorigin=""></script>
     <script>
             let locations =[];
-        {%  for city in citys %}
+        {%  for city in cities %}
                  locations.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
         {% endfor %}
         let map = L.map('mapid').setView([47.878264, 1.9258559], 13);
