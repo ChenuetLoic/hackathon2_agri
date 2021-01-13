@@ -49,9 +49,15 @@ class City
      */
     private $farmers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Buyer::class, mappedBy="city")
+     */
+    private $buyers;
+
     public function __construct()
     {
         $this->farmers = new ArrayCollection();
+        $this->buyers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,6 +149,36 @@ class City
             // set the owning side to null (unless already changed)
             if ($farmer->getCity() === $this) {
                 $farmer->setCity(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Buyer[]
+     */
+    public function getBuyers(): Collection
+    {
+        return $this->buyers;
+    }
+
+    public function addBuyer(Buyer $buyer): self
+    {
+        if (!$this->buyers->contains($buyer)) {
+            $this->buyers[] = $buyer;
+            $buyer->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBuyer(Buyer $buyer): self
+    {
+        if ($this->buyers->removeElement($buyer)) {
+            // set the owning side to null (unless already changed)
+            if ($buyer->getCity() === $this) {
+                $buyer->setCity(null);
             }
         }
 
