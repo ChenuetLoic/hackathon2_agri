@@ -21,7 +21,9 @@ class MapController extends AbstractController
      */
     public function indexMap(CityRepository $cityRepository, FarmerRepository $farmerRepository): Response
     {
+        $cities = $farmerRepository->getFarmerCountByCity();
         return $this->render('map/map.html.twig', [
+            'cities' => $cities,
         ]);
 
 
