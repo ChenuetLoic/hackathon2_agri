@@ -1,4 +1,6 @@
 @import 'variables.scss';
+@import 'slide.scss';
+@import 'search.scss';
 @import '~bootstrap/scss/bootstrap';
 
 h1  {
@@ -7,4 +9,61 @@ h1  {
 
 h2 {
     color: $info;
+}
+
+.legend {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 5;
+    background-color: white;
+    padding: 8px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-radius: 6px;
+}
+
+.farmers {
+    margin-bottom: 4px;
+}
+
+.buyers {
+    margin-bottom: 0;
+}
+
+.buyers::before {
+    background-image: url(../images/markerOrange.png);
+    background-size: 25px 25px;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    content:"";
+    position: relative;
+    top: 5px;
+}
+.farmers::before {
+    background-image: url(../images/markerGreen.png);
+    background-size: 25px 25px;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    content:"";
+    position: relative;
+    top: 5px;
+}
+
+@media screen and (max-width: 425px){
+    .legend {
+        font-size: 10px;
+        bottom: 42px;
+    }
+    .buyers::before {
+        background-size: 15px 15px;
+        width: 15px;
+        height: 15px;
+    }
+    .farmers::before {
+        background-size: 15px 15px;
+        width: 15px;
+        height: 15px;
+    }
 }

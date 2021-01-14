@@ -19,12 +19,21 @@ class FarmerRepository extends ServiceEntityRepository
         parent::__construct($registry, Farmer::class);
     }
 
-    public function getFarmerCountByCity(): array
+    public function getFarmerWithCity(): array
     {
         return $this->createQueryBuilder('f')
-            ->select('c.city, c.latitude, c.longitude, COUNT(f.id) as farmers')
+            ->select('c.city, c.latitude, c.longitude, f.id')
             ->join('App\Entity\City', 'c', 'WITH', 'c.id=f.city')
-            ->groupBy('f.city')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getFarmerWithQuantityAndCategory(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->select('c.city, c.latitude, c.longitude, f.id')
+            ->join('App\Entity\City', 'c', 'WITH', 'c.id=f.city')
             ->getQuery()
             ->getResult()
             ;

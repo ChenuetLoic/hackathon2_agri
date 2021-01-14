@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Repository\BuyerRepository;
 use App\Repository\CityRepository;
 use App\Repository\FarmerRepository;
 use App\Repository\TransactionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,13 +20,17 @@ class MapController extends AbstractController
      * @Route ("/", name="index_map", methods={"GET"})
      * @param CityRepository $cityRepository
      * @param FarmerRepository $farmerRepository
+     * @param BuyerRepository $buyerRepository
      * @return Response
      */
-    public function indexMap(CityRepository $cityRepository, FarmerRepository $farmerRepository): Response
+    public function indexMap(CityRepository $cityRepository, FarmerRepository $farmerRepository, BuyerRepository $buyerRepository): Response
     {
-        $cities = $farmerRepository->getFarmerCountByCity();
+
+        $cities = $farmerRepository->getFarmerWithCity();
+        $buyers = $buyerRepository->getBuyers();
         return $this->render('map/map.html.twig', [
             'cities' => $cities,
+            'buyers' => $buyers,
         ]);
     }
 
@@ -54,5 +60,33 @@ class MapController extends AbstractController
         return $this->render('map/map.html.twig', [
             'cities' => $cities,
         ]);
+    }
+  
+    /**
+     * @Route("scriptdegueu", name="nepasregarder")
+     * @param FarmerRepository $farmerRepository
+     * @param EntityManagerInterface $entityManager
+     */
+
+    public function scriptpourriparcequeyapasgroupconcatdansDoctrine(FarmerRepository $farmerRepository, EntityManagerInterface $entityManager)
+    {
+        $farmers = $farmerRepository->findAll();
+        $categories=[];
+        foreach ($farmers as $farmer){
+            $products = [];
+            $quantity = 0;
+            $transactions = $farmer->getTransactions();
+            foreach ($transactions as $transaction) {
+                $products[] = ucfirst($transaction->getProduct()->getCategory());
+                $quantity += $transaction->getQuantity();
+            }
+
+            $farmer->setCategory(implode(' ', array_unique($products)))
+                ->setQuantitySold($quantity);
+        }
+
+        $entityManager->flush();
+        return $this->redirectToRoute('index_map');
+
     }
 }
