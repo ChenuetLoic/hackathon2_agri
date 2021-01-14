@@ -45,6 +45,7 @@ class MapController extends AbstractController
             return $this->render('map/map.html.twig', [
                 'cities' => $farmers,
                 'buyers' => $buyers,
+                'form' => $form->createView()
             ]);
         }
 
@@ -53,6 +54,7 @@ class MapController extends AbstractController
         return $this->render('map/map.html.twig', [
             'cities' => $cities,
             'buyers' => $buyers,
+            'form' => $form->createView()
         ]);
     }
 
