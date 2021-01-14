@@ -56,7 +56,9 @@
                 "{{ city.quantitySold }}",
                 "{{ city.category }}",
                 "{{ city.farmSize }}",
-                {{ city.registerYear }}
+                {{ city.registerYear }},
+                "{{ city.comment }}",
+                {{ city.xpRate }},
             ]);
         {% endfor %}
         {% for buyer in buyers %}
@@ -79,7 +81,7 @@
                     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
                 let farmersMarker = L.marker([farmersLocation[i][1], farmersLocation[i][2]], {icon: greenIcon});
-                farmersMarker.bindPopup('<p><b>Nous fait confiance depuis ' +farmersLocation[i][6].toString()+ '</b></p><p> <span class="header-font">Exploitation : </span><b>' +farmersLocation[i][5]+ ' Ha</b></p><p class=""> <span class="header-font">Produits : </span><b>' +farmersLocation[i][4]+ '</b></p><p> <span class="header-font">A vendu </span><b>' +farmersLocation[i][3]+ '</b> <span class="header-font">tonnes de céréales</span></p>')
+                farmersMarker.bindPopup('<p><b>Nous fait confiance depuis ' +farmersLocation[i][6].toString()+ '</b></p><p> <span class="header-font">Exploitation : </span><b>' +farmersLocation[i][5]+ ' Ha</b></p><p class=""> <span class="header-font">Produits : </span><b>' +farmersLocation[i][4]+ '</b></p><p> <span class="header-font">A vendu </span><b>' +farmersLocation[i][3]+ '</b> <span class="header-font">tonnes de céréales</span></p>'+farmersLocation[i][7]+farmersLocation[i][8])
                 markerClusters.addLayer(farmersMarker);
             }
 
