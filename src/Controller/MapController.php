@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\BuyerRepository;
 use App\Repository\CityRepository;
 use App\Repository\FarmerRepository;
 use App\Repository\TransactionRepository;
@@ -19,20 +20,22 @@ class MapController extends AbstractController
      * @Route ("/", name="index_map", methods={"GET"})
      * @param CityRepository $cityRepository
      * @param FarmerRepository $farmerRepository
+     * @param BuyerRepository $buyerRepository
      * @return Response
      */
-    public function indexMap(CityRepository $cityRepository, FarmerRepository $farmerRepository): Response
+    public function indexMap(CityRepository $cityRepository, FarmerRepository $farmerRepository, BuyerRepository $buyerRepository): Response
     {
-        $farmerCities = $farmerRepository->getFarmerWithCity();
 
-
+        $cities = $farmerRepository->getFarmerWithCity();
+        $buyers = $buyerRepository->getBuyers();
         return $this->render('map/map.html.twig', [
-            'cities' => $farmerCities,
+            'cities' => $cities,
+            'buyers' => $buyers,
         ]);
     }
 
     /**
-     * @Route("/nique/{category}", name="map_by_cereal")
+     * @Route("/category/{category}", name="map_by_cereal")
      * @param TransactionRepository $transactionRepository
      * @param $category
      * @return Response
