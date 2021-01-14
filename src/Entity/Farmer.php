@@ -60,6 +60,21 @@ class Farmer
      */
     private $quantitySold;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $registerYear;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $xpRate;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -181,6 +196,42 @@ class Farmer
     public function setQuantitySold(?string $quantitySold): self
     {
         $this->quantitySold = $quantitySold;
+
+        return $this;
+    }
+
+    public function getRegisterYear(): ?string
+    {
+        return $this->registerYear;
+    }
+
+    public function setRegisterYear(string $registerYear): self
+    {
+        $this->registerYear = $registerYear;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getXpRate(): ?int
+    {
+        return $this->xpRate;
+    }
+
+    public function setXpRate(?int $xpRate): self
+    {
+        $this->xpRate = $xpRate;
 
         return $this;
     }

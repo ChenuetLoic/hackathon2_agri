@@ -11,6 +11,8 @@ h2 {
     color: $info;
 }
 
+/*Map Legend*/
+
 .legend {
     position: absolute;
     bottom: 10px;
@@ -66,4 +68,54 @@ h2 {
         width: 15px;
         height: 15px;
     }
+}
+
+/*Pop-ups*/
+
+.leaflet-popup-content-wrapper {
+    background: rgba(255,255,255,0.9) !important;
+    border-radius: 4px !important;
+    color: $primary !important;
+    font-family: $default-font-family !important;
+    font-size: 16px !important;
+}
+
+.leaflet-popup-tip {
+    background: rgba(255,255,255,0.9) !important;
+}
+
+a.leaflet-popup-close-button {
+    color: $primary !important;
+}
+
+.header-font {
+    font-family: $header-font-family !important;
+    font-size: 15px !important;
+    color: $black !important;
+}
+
+p.comment {
+    text-align: center;
+    margin: 16px 0 0 !important;
+}
+
+hr {
+    margin-top: -2px;
+}
+
+.comment::before {
+    background-image: url(../images/agriculteur.svg);
+    background-size: 35px 35px;
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    content:"";
+    position: relative;
+    top: 5px;
+}
+
+.score {
+    top: 2px;
+    position: relative;
+    margin-left: 10px;
 }

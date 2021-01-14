@@ -21,7 +21,7 @@ class TransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, Transaction::class);
     }
 
-    public function getFarmersByProduct($category)
+    public function getFarmersByProduct(string $category)
     {
         return $this->createQueryBuilder('t')
             ->select('c.city, c.latitude, c.longitude')
