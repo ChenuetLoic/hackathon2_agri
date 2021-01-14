@@ -19,6 +19,19 @@ class TransactionRepository extends ServiceEntityRepository
         parent::__construct($registry, Transaction::class);
     }
 
+    public function getFarmersByProduct($category)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('c.city, c.latitude, c.longitude')
+            ->join('App\Entity\Farmer', 'f', 'WITH', 'f.id = t.farmer')
+            ->join('App\Entity\City', 'c', 'WITH', 'c.id = f.city')
+            ->join('App\Entity\Product', 'p', 'WITH', 'p.id = t.product')
+            ->where('p.category = :category')
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Transaction[] Returns an array of Transaction objects
     //  */
