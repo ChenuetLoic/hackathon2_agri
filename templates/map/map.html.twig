@@ -49,7 +49,15 @@
         let farmersLocation = [];
         let buyersLocation = [];
         {% for city in cities %}
-        farmersLocation.push(["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
+            farmersLocation.push([
+                "{{ city.city }}",
+                {{ city.latitude }},
+                {{ city.longitude }},
+                "{{ city.quantitySold }}",
+                "{{ city.category }}",
+                "{{ city.farmSize }}",
+                {{ city.registerYear }}
+            ]);
         {% endfor %}
         {% for buyer in buyers %}
         buyersLocation.push(["{{ buyer.city }}", {{ buyer.latitude }}, {{ buyer.longitude }}]);
@@ -71,9 +79,10 @@
                     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
                 let farmersMarker = L.marker([farmersLocation[i][1], farmersLocation[i][2]], {icon: greenIcon});
-                farmersMarker.bindPopup(farmersLocation[i][0])
+                farmersMarker.bindPopup('<p> A vendu ' +farmersLocation[i][3]+ ' tonnes de céréales</p><p> Exploitation : ' +farmersLocation[i][5]+ ' Ha</p><p> Produits: ' +farmersLocation[i][4]+ '</p> <p> Depuis ' +farmersLocation[i][6].toString()+ '</p>' )
                 markerClusters.addLayer(farmersMarker);
             }
+
             for (let i = 0; i < buyersLocation.length; i++) {
                 let orangeIcon = L.icon({
                     iconUrl: iconBase + 'markerOrange.e34b5cfb.png',

@@ -19,25 +19,16 @@ class FarmerRepository extends ServiceEntityRepository
         parent::__construct($registry, Farmer::class);
     }
 
-    public function getFarmerWithCity(): array
+    public function getFarmerWithData(): array
     {
         return $this->createQueryBuilder('f')
-            ->select('c.city, c.latitude, c.longitude, f.id')
+            ->select('c.city, c.latitude, c.longitude, f.id, f.registerYear, f.quantitySold, f.category, f.farmSize')
             ->join('App\Entity\City', 'c', 'WITH', 'c.id=f.city')
             ->getQuery()
             ->getResult()
             ;
     }
 
-    public function getFarmerWithQuantityAndCategory(): array
-    {
-        return $this->createQueryBuilder('f')
-            ->select('c.city, c.latitude, c.longitude, f.id')
-            ->join('App\Entity\City', 'c', 'WITH', 'c.id=f.city')
-            ->getQuery()
-            ->getResult()
-            ;
-    }
 
     public function getFarmersByFarmSize(int $size)
     {
