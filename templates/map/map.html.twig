@@ -49,17 +49,17 @@
         let farmersLocation = [];
         let buyersLocation = [];
         {% for city in cities %}
-            farmersLocation.push([
-                "{{ city.city }}",
-                {{ city.latitude }},
-                {{ city.longitude }},
-                "{{ city.quantitySold }}",
-                "{{ city.category }}",
-                "{{ city.farmSize }}",
-                {{ city.registerYear }},
-                "{{ city.comment }}",
-                {{ city.xpRate }},
-            ]);
+        farmersLocation.push([
+            "{{ city.city }}",
+            {{ city.latitude }},
+            {{ city.longitude }},
+            "{{ city.quantitySold }}",
+            "{{ city.category }}",
+            "{{ city.farmSize }}",
+            {{ city.registerYear }},
+            "{{ city.comment }}",
+            {{ city.xpRate }},
+        ]);
         {% endfor %}
         {% for buyer in buyers %}
         buyersLocation.push(["{{ buyer.city }}", {{ buyer.latitude }}, {{ buyer.longitude }}]);
@@ -81,7 +81,26 @@
                     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
                 let farmersMarker = L.marker([farmersLocation[i][1], farmersLocation[i][2]], {icon: greenIcon});
-                farmersMarker.bindPopup('<p><b>Nous fait confiance depuis ' +farmersLocation[i][6].toString()+ '</b></p><p> <span class="header-font">Exploitation : </span><b>' +farmersLocation[i][5]+ ' Ha</b></p><p class=""> <span class="header-font">Produits : </span><b>' +farmersLocation[i][4]+ '</b></p><p> <span class="header-font">A vendu </span><b>' +farmersLocation[i][3]+ '</b> <span class="header-font">tonnes de céréales</span></p>'+farmersLocation[i][7]+farmersLocation[i][8])
+
+                let osef = '';
+                if (farmersLocation[i][3] != false) {
+                    let stars = '';
+                    for(let j = 1; j < 6; j++) {
+                        if (j <= farmersLocation[i][8]) {
+                            stars += '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16"> <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>';
+                        } else {
+                            stars += '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#d6d6d6" class="bi bi-star-fill" viewBox="0 0 16 16"> <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>';
+                        }
+                    }
+                    osef = '<p class=""> <span class="header-font">Produits : </span><b>' + farmersLocation[i][4] + '</b></p>' +
+                        '<p> <span class="header-font">A vendu </span><b>' + farmersLocation[i][3] + '</b> <span class="header-font">tonnes de céréales</span></p>' +
+                        '<p class="comment"><b>Avis</b></p> <hr><div class="text-center">' + stars +
+                        '<span class="score"><b>' + farmersLocation[i][8] + '/5</b></span>' +
+                        '</div><p><span class="header-font">' + farmersLocation[i][7] + '</span></p>'
+                }
+                farmersMarker.bindPopup('<p><b>Nous fait confiance depuis ' + farmersLocation[i][6].toString() + '</b></p>' +
+                    '<p> <span class="header-font">Exploitation : </span><b>' + farmersLocation[i][5] + ' Ha</b></p>' + osef)
+
                 markerClusters.addLayer(farmersMarker);
             }
 
