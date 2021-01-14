@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+     {{ parent() }}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+ {% endblock %}
+{% block body %}
+    <div id="map" style="height: 100vh;">
+    </div>
+    <title>Carte</title>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        let lat = 47.878264;
+        let lon = 1.9258559;
+        let macarte = null;
+        let markerClusters;
+        let locations =[];
+        {%  for city in cities %}
+        locations.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
+        {% endfor %}
+        function initMap() {
+            let iconBase = 'http://localhost/carte/icons/';
+            macarte = L.map('map').setView([lat, lon], 6);
+            markerClusters = L.markerClusterGroup();
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                minZoom: 5,
+                maxZoom: 18
+            }).addTo(macarte);
+            for (let i = 0; i < locations.length; i++) {
+                let myIcon = L.icon({
+                    iconUrl: iconBase + "autres.png",
+                    iconSize: [50, 50],
+                    iconAnchor: [25, 50],
+                    popupAnchor: [-3, -76],
+                });
+                let marker = L.marker([locations[i][1], locations[i][2]]);
+                marker.bindPopup(locations[i][0])
+                markerClusters.addLayer(marker);
+            }
+            macarte.addLayer(markerClusters);
+        }
+        window.onload = function(){
+            initMap();
+        };
+    </script>
+{% endblock %}

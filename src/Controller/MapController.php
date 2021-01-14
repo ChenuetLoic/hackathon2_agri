@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CityRepository;
 use App\Repository\FarmerRepository;
+use App\Repository\TransactionRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +24,20 @@ class MapController extends AbstractController
     {
         $cities = $farmerRepository->getFarmerCountByCity();
         return $this->render('map/map.html.twig', [
+            'cities' => $cities,
+        ]);
+    }
+
+    /**
+     * @Route("/{category}", name="show_wheat")
+     * @param TransactionRepository $transactionRepository
+     * @param $category
+     * @return Response
+     */
+    public function mapShowWheat(TransactionRepository $transactionRepository, string $category)
+    {
+        $cities = $transactionRepository->getFarmersByProduct($category);
+        return $this->render('map/mapWheat.html.twig', [
             'cities' => $cities,
         ]);
     }
