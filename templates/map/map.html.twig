@@ -2,8 +2,8 @@
  {% block stylesheets %}
      {{ parent() }}
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-          crossorigin=""/>
+           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+           crossorigin=""/>
  {% endblock %}
 {% block body %}
     <div id="page-wrapper">
@@ -26,14 +26,20 @@
     <div id="map" style="height: 100vh;">
     </div>
     <title>Carte</title>
+    <div class="legend">
+        <p class="farmers">Agriculteurs</p>
+        <p class="buyers">Acheteurs</p>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <script type='text/javascript' src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.0/dist/L.Control.Locate.min.js"
+            charset="utf-8"></script>
+    <script type='text/javascript'
+            src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
     <script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
     <script>
         let lat = 47.878264;
@@ -42,11 +48,11 @@
         let markerClusters;
         let farmersLocation = [];
         let buyersLocation = [];
-        {%  for city in cities %}
-        farmersLocation.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
+        {% for city in cities %}
+        farmersLocation.push(["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
         {% endfor %}
-        {%  for buyer in buyers %}
-        buyersLocation.push (["{{ buyer.city }}", {{ buyer.latitude }}, {{ buyer.longitude }}]);
+        {% for buyer in buyers %}
+        buyersLocation.push(["{{ buyer.city }}", {{ buyer.latitude }}, {{ buyer.longitude }}]);
         {% endfor %}
         function initMap() {
             let iconBase = '{{ asset('/build/images/') }}';
@@ -60,40 +66,41 @@
             for (let i = 0; i < farmersLocation.length; i++) {
                 let greenIcon = L.icon({
                     iconUrl: iconBase + 'markerGreen.58300f49.png',
-                    iconSize:     [40, 40], // size of the icon
-                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    iconSize: [40, 40], // size of the icon
+                    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+                    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
-                let farmersMarker = L.marker([farmersLocation[i][1], farmersLocation[i][2]], { icon: greenIcon });
+                let farmersMarker = L.marker([farmersLocation[i][1], farmersLocation[i][2]], {icon: greenIcon});
                 farmersMarker.bindPopup(farmersLocation[i][0])
                 markerClusters.addLayer(farmersMarker);
             }
             for (let i = 0; i < buyersLocation.length; i++) {
                 let orangeIcon = L.icon({
                     iconUrl: iconBase + 'markerOrange.e34b5cfb.png',
-                    iconSize:     [40, 40], // size of the icon
-                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    iconSize: [40, 40], // size of the icon
+                    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+                    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
-                let buyersMarker = L.marker([buyersLocation[i][1], buyersLocation[i][2]], { icon: orangeIcon });
+                let buyersMarker = L.marker([buyersLocation[i][1], buyersLocation[i][2]], {icon: orangeIcon});
                 buyersMarker.bindPopup(buyersLocation[i][0])
                 markerClusters.addLayer(buyersMarker);
             }
             macarte.addLayer(markerClusters);
             //search
             macarte.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'))
-            macarte.addControl( new L.Control.Search({
+            macarte.addControl(new L.Control.Search({
                 url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
                 jsonpParam: 'json_callback',
                 propertyName: 'display_name',
-                propertyLoc: ['lat','lon'],
-                marker: L.circleMarker([0,0],{radius:30}),
+                propertyLoc: ['lat', 'lon'],
+                marker: L.circleMarker([0, 0], {radius: 30}),
                 autoCollapse: true,
                 autoType: false,
                 minLength: 2,
-            }) );
+            }));
         }
-        window.onload = function(){
+
+        window.onload = function () {
             initMap();
             //Geolocation
             let lc = L.control.locate({
