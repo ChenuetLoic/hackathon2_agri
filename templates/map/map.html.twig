@@ -79,7 +79,12 @@
                     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
                 let farmersMarker = L.marker([farmersLocation[i][1], farmersLocation[i][2]], {icon: greenIcon});
-                farmersMarker.bindPopup('<p><b>Nous fait confiance depuis ' +farmersLocation[i][6].toString()+ '</b></p><p> <span class="header-font">Exploitation : </span><b>' +farmersLocation[i][5]+ ' Ha</b></p><p class=""> <span class="header-font">Produits : </span><b>' +farmersLocation[i][4]+ '</b></p><p> <span class="header-font">A vendu </span><b>' +farmersLocation[i][3]+ '</b> <span class="header-font">tonnes de céréales</span></p>')
+                farmersMarker.bindPopup('<p><b>Nous fait confiance depuis ' +farmersLocation[i][6].toString()+ '</b></p>' +
+                    '<p> <span class="header-font">Exploitation : </span><b>' +farmersLocation[i][5]+ ' Ha</b></p>' +
+                    '<p class=""> <span class="header-font">Produits : </span><b>' +farmersLocation[i][4]+ '</b></p>' +
+                    '<p> <span class="header-font">A vendu </span><b>' +farmersLocation[i][3]+ '</b> <span class="header-font">tonnes de céréales</span></p>' +
+                    '<p class="comment"><b>Commentaire</b></p> <hr>' +
+                    '<p><span class="header-font">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam orci erat, tempor et ante ut, semper cursus dui. Mauris neque est, varius eu convallis vel, facilisis vel sem.</span></p>')
                 markerClusters.addLayer(farmersMarker);
             }
 
