@@ -29,15 +29,15 @@ class MapController extends AbstractController
     }
 
     /**
-     * @Route("/{category}", name="show_wheat")
+     * @Route("/{category}", name="map_by_cereal")
      * @param TransactionRepository $transactionRepository
      * @param $category
      * @return Response
      */
-    public function mapShowWheat(TransactionRepository $transactionRepository, string $category)
+    public function mapShowFarmersByCereal(TransactionRepository $transactionRepository, string $category): Response
     {
         $cities = $transactionRepository->getFarmersByProduct($category);
-        return $this->render('map/mapWheat.html.twig', [
+        return $this->render('map/map.html.twig', [
             'cities' => $cities,
         ]);
     }
