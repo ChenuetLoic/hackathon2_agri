@@ -1,12 +1,30 @@
 {% extends 'base.html.twig' %}
  {% block stylesheets %}
      {{ parent() }}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
  {% endblock %}
 {% block body %}
+    <div id="page-wrapper">
+        <div id="title"></div>
+    </div>
+    <div id="btn">
+        <div id='top'></div>
+        <div id='middle'></div>
+        <div id='bottom'></div>
+    </div>
+    <div id="box">
+        <div id="items">
+            <div class="item">Item 1</div>
+            <div class="item">Item 2</div>
+            <div class="item">Item 3</div>
+            <div class="item">Item 4</div>
+            <div class="item">Item 5</div>
+        </div>
+    </div>
     <div id="map" style="height: 100vh;">
+
     </div>
     <title>Carte</title>
 {% endblock %}
@@ -28,7 +46,7 @@
         locations.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
         {% endfor %}
         function initMap() {
-            let iconBase = 'http://localhost/carte/icons/';
+            let iconBase = '{{ asset('/build/images/') }}';
             macarte = L.map('map').setView([lat, lon], 6);
             markerClusters = L.markerClusterGroup();
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
@@ -37,13 +55,13 @@
                 maxZoom: 18
             }).addTo(macarte);
             for (let i = 0; i < locations.length; i++) {
-                let myIcon = L.icon({
-                    iconUrl: iconBase + "autres.png",
-                    iconSize: [50, 50],
-                    iconAnchor: [25, 50],
-                    popupAnchor: [-3, -76],
+                let greenIcon = L.icon({
+                    iconUrl: iconBase + 'markerGreen.58300f49.png',
+                    iconSize:     [60, 60], // size of the icon
+                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
-                let marker = L.marker([locations[i][1], locations[i][2]]);
+                let marker = L.marker([locations[i][1], locations[i][2]], { icon: greenIcon });
                 marker.bindPopup(locations[i][0])
                 markerClusters.addLayer(marker);
             }
