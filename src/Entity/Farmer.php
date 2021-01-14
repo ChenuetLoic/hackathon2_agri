@@ -50,6 +50,16 @@ class Farmer
      */
     private $transactions;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $quantitySold;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -120,6 +130,7 @@ class Farmer
         return $this;
     }
 
+
     /**
      * @return Collection|Transaction[]
      */
@@ -146,6 +157,30 @@ class Farmer
                 $transaction->setFarmer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getQuantitySold(): ?string
+    {
+        return $this->quantitySold;
+    }
+
+    public function setQuantitySold(?string $quantitySold): self
+    {
+        $this->quantitySold = $quantitySold;
 
         return $this;
     }
