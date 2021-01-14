@@ -49,7 +49,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * @Route("scriptdegueu", name="nepasregarder")
+     * @Route("scriptpirequejamais", name="nepasregarder")
      * @param FarmerRepository $farmerRepository
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -64,7 +64,14 @@ class MapController extends AbstractController
             $quantity = 0;
             $transactions = $farmer->getTransactions();
             foreach ($transactions as $transaction) {
-                $products[] = ucfirst($transaction->getProduct()->getCategory());
+                $label = $transaction->getProduct()->getCategory();
+                if ($label === 'ble') {
+                    $products[] = 'Blé';
+                } elseif ($label === 'mais') {
+                    $products[] = 'Maïs';
+                } else {
+                    $products[] = ucfirst($transaction->getProduct()->getCategory());
+                }
                 $quantity += $transaction->getQuantity();
             }
 
