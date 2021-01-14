@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Farmer;
+use App\Entity\Filter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,25 +21,86 @@ class FarmerRepository extends ServiceEntityRepository
         parent::__construct($registry, Farmer::class);
     }
 
-    public function getFarmerWithCity(): array
+    public function getFarmerWithData(): array
     {
         return $this->createQueryBuilder('f')
-            ->select('c.city, c.latitude, c.longitude, f.id')
+            ->select('c.city, c.latitude, c.longitude, f.id, f.registerYear, f.quantitySold, f.category, f.farmSize,
+         f.comment, f.xpRate')
             ->join('App\Entity\City', 'c', 'WITH', 'c.id=f.city')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
-    public function getFarmerWithQuantityAndCategory(): array
+    public function getFilteredFarmers(Filter $filter)
     {
-        return $this->createQueryBuilder('f')
-            ->select('c.city, c.latitude, c.longitude, f.id')
-            ->join('App\Entity\City', 'c', 'WITH', 'c.id=f.city')
-            ->getQuery()
-            ->getResult()
-            ;
+        $queryBuilder = $this->createQueryBuilder('f')
+            ->select('c.city, c.latitude, c.longitude, f.id, f.registerYear, f.quantitySold, f.category, f.farmSize,
+         f.comment, f.xpRate')
+            ->join('App\Entity\City', 'c', 'c.id = f.city');
+        if (!empty($filter->getCategory())) {
+            $queryBuilder = $this->getByProduct($filter, $queryBuilder);
+        }
+        if (!empty($filter->getFarmSize())) {
+            $queryBuilder = $this->getByFarmSize($filter, $queryBuilder);
+        }
+
+        return $queryBuilder->getQuery()->getResult();
     }
+
+    private function getByProduct(Filter $filter, QueryBuilder $queryBuilder): QueryBuilder
+    {
+        $queryBuilder = $queryBuilder
+            ->join('App\Entity\Transaction', 't', 'WITH', 't.farmer = f.id')
+            ->join('App\Entity\Product', 'p', 'WITH', 'p.id = t.product')
+            ->where('p.category = :category')
+            ->setParameter('category', $filter->getCategory());
+        return $queryBuilder;
+    }
+
+    private function getByFarmSize(Filter $filter, QueryBuilder $queryBuilder)
+    {
+        $queryBuilder = $queryBuilder
+            ->andWhere('r.farmSize :size')
+            ->setParameter('size', $filter->getFarmSize());
+        return $queryBuilder;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    private function getByCategory(Filter $filter, QueryBuilder $queryBuilder): QueryBuilder
+//    {
+//        $queryBuilder = $queryBuilder
+//            ->join('App\Entity\:role', 'r')
+//            ->setParameter('role', $filter->getRole());
+//        return $queryBuilder;
+//    }
+
 
     // /**
     //  * @return Farmer[] Returns an array of Farmer objects
