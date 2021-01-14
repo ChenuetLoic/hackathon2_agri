@@ -87,7 +87,6 @@
             }
             macarte.addLayer(markerClusters);
             //search
-            macarte.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'))
             macarte.addControl(new L.Control.Search({
                 url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
                 jsonpParam: 'json_callback',
