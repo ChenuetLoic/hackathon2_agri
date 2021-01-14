@@ -40,6 +40,7 @@ body {
   cursor: pointer;
   background-color: white;
   border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 2px;
   background-clip: padding-box;
   transition: right 500ms $easing;
   div {
