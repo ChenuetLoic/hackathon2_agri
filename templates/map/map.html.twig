@@ -24,7 +24,6 @@
         </div>
     </div>
     <div id="map" style="height: 100vh;">
-
     </div>
     <title>Carte</title>
 {% endblock %}
@@ -66,18 +65,6 @@
                 markerClusters.addLayer(marker);
             }
             macarte.addLayer(markerClusters);
-        }
-        window.onload = function(){
-            initMap();
-            //Geolocation
-            let lc = L.control.locate({
-                strings: {
-                    title: "Géolocalisation"
-                },
-                locateOptions: {
-                    maxZoom: 12
-                }
-            }).addTo(macarte);
             //search
             macarte.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'))
             macarte.addControl( new L.Control.Search({
@@ -90,6 +77,18 @@
                 autoType: false,
                 minLength: 2,
             }) );
+        }
+        window.onload = function(){
+            initMap();
+            //Geolocation
+            let lc = L.control.locate({
+                strings: {
+                    title: "Géolocalisation"
+                },
+                locateOptions: {
+                    maxZoom: 12
+                }
+            }).addTo(macarte);
         };
     </script>
 {% endblock %}
