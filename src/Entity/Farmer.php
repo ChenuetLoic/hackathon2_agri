@@ -60,6 +60,11 @@ class Farmer
      */
     private $quantitySold;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $registerYear;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -181,6 +186,18 @@ class Farmer
     public function setQuantitySold(?string $quantitySold): self
     {
         $this->quantitySold = $quantitySold;
+
+        return $this;
+    }
+
+    public function getRegisterYear(): ?string
+    {
+        return $this->registerYear;
+    }
+
+    public function setRegisterYear(string $registerYear): self
+    {
+        $this->registerYear = $registerYear;
 
         return $this;
     }

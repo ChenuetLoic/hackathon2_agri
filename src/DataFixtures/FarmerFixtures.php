@@ -30,6 +30,7 @@ class FarmerFixtures extends Fixture implements ContainerAwareInterface
             $farmer = new Farmer();
             $farmer->setCity($this->getReference('city_'.$csvLine['city_id']))
                 ->setRegisteredAt($this->stringToDatetime($csvLine['registered_at']))
+                ->setRegisterYear(substr($csvLine['registered_at'], 6,4))
                 ->setFirstName($csvLine['first_name'])
                 ->setLastName($csvLine['last_name'])
                 ->setFarmSize($csvLine['farm_size']);
