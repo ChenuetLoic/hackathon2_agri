@@ -35,6 +35,8 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('geolocation', './assets/js/geolocation.js')
     .addEntry('search', './assets/js/search.js')
+    .addEntry('slide', './assets/js/slide.js')
+
 
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
