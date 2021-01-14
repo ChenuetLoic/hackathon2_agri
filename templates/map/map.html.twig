@@ -56,7 +56,9 @@
                 "{{ city.quantitySold }}",
                 "{{ city.category }}",
                 "{{ city.farmSize }}",
-                {{ city.registerYear }}
+                {{ city.registerYear }},
+                "{{ city.comment }}",
+                {{ city.xpRate }},
             ]);
         {% endfor %}
         {% for buyer in buyers %}
@@ -85,6 +87,7 @@
                     '<p> <span class="header-font">A vendu </span><b>' +farmersLocation[i][3]+ '</b> <span class="header-font">tonnes de céréales</span></p>' +
                     '<p class="comment"><b>Commentaire</b></p> <hr>' +
                     '<p><span class="header-font">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam orci erat, tempor et ante ut, semper cursus dui. Mauris neque est, varius eu convallis vel, facilisis vel sem.</span></p>')
+
                 markerClusters.addLayer(farmersMarker);
             }
 

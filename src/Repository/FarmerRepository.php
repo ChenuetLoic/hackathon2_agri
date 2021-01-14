@@ -22,7 +22,8 @@ class FarmerRepository extends ServiceEntityRepository
     public function getFarmerWithData(): array
     {
         return $this->createQueryBuilder('f')
-            ->select('c.city, c.latitude, c.longitude, f.id, f.registerYear, f.quantitySold, f.category, f.farmSize')
+            ->select('c.city, c.latitude, c.longitude, f.id, f.registerYear, f.quantitySold, f.category, f.farmSize,
+             f.comment, f.xpRate')
             ->join('App\Entity\City', 'c', 'WITH', 'c.id=f.city')
             ->getQuery()
             ->getResult()
