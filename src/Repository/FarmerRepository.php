@@ -39,6 +39,17 @@ class FarmerRepository extends ServiceEntityRepository
             ;
     }
 
+    public function getFarmersByFarmSize(int $size)
+    {
+        return $this->createQueryBuilder('f')
+            ->select('c.city, c.latitude, c.longitude, f.farmSize')
+            ->join('App\Entity\City', 'c', 'WITH', 'c.id = f.city')
+            ->where('f.farmSize < :size')
+            ->setParameter('size', $size)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Farmer[] Returns an array of Farmer objects
     //  */
