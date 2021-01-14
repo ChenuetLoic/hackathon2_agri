@@ -11,6 +11,8 @@ h2 {
     color: $info;
 }
 
+/*Map Legend*/
+
 .legend {
     position: absolute;
     bottom: 10px;
@@ -66,4 +68,28 @@ h2 {
         width: 15px;
         height: 15px;
     }
+}
+
+/*Pop-ups*/
+
+.leaflet-popup-content-wrapper {
+    background: rgba(255,255,255,0.9) !important;
+    border-radius: 4px !important;
+    color: $primary !important;
+    font-family: $default-font-family !important;
+    font-size: 16px !important;
+}
+
+.leaflet-popup-tip {
+    background: rgba(255,255,255,0.9) !important;
+}
+
+a.leaflet-popup-close-button {
+    color: $primary !important;
+}
+
+.header-font {
+    font-family: $header-font-family !important;
+    font-size: 15px !important;
+    color: $black !important;
 }
