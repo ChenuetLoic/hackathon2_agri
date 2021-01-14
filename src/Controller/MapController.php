@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Filter;
+use App\Form\FilterType;
 use App\Repository\BuyerRepository;
 use App\Repository\CityRepository;
 use App\Repository\FarmerRepository;
 use App\Repository\TransactionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,19 +21,40 @@ class MapController extends AbstractController
 {
     /**
      * @Route ("/", name="index_map", methods={"GET"})
+     * @param Request $request
      * @param CityRepository $cityRepository
      * @param FarmerRepository $farmerRepository
      * @param BuyerRepository $buyerRepository
      * @return Response
      */
-    public function indexMap(CityRepository $cityRepository, FarmerRepository $farmerRepository, BuyerRepository $buyerRepository): Response
-    {
+    public function indexMap(
+        Request $request,
+        CityRepository $cityRepository,
+        FarmerRepository $farmerRepository,
+        BuyerRepository $buyerRepository
+    ): Response {
+        $filter = new Filter();
+        $form = $this->createForm(FilterType::class, $filter);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $filter = $form->getData();
+            $farmers = $farmerRepository->getFilteredFarmers($filter);
+            $buyers = $buyerRepository->getBuyers();
+
+            return $this->render('map/map.html.twig', [
+                'cities' => $farmers,
+                'buyers' => $buyers,
+                'form' => $form->createView()
+            ]);
+        }
 
         $cities = $farmerRepository->getFarmerWithData();
         $buyers = $buyerRepository->getBuyers();
         return $this->render('map/map.html.twig', [
             'cities' => $cities,
             'buyers' => $buyers,
+            'form' => $form->createView()
         ]);
     }
 
@@ -441,6 +465,9 @@ class MapController extends AbstractController
 
 
 
+
+
+
     /**
      * @Route("scriptpirequejamais", name="nepasregarder")
      * @param FarmerRepository $farmerRepository
@@ -465,9 +492,10 @@ class MapController extends AbstractController
             'RAS',
             'Bonjour votre entreprise est réactif à l\'écoute et évolutif il faut continuer dans la perspective de nous accompagner. Très bien',
         ];
+      
         $farmers = $farmerRepository->findAll();
-        $categories=[];
-        foreach ($farmers as $farmer){
+        $categories = [];
+        foreach ($farmers as $farmer) {
             $products = [];
             $quantity = 0;
             $transactions = $farmer->getTransactions();
