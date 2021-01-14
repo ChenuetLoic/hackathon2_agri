@@ -26,7 +26,7 @@ class MapController extends AbstractController
     public function indexMap(CityRepository $cityRepository, FarmerRepository $farmerRepository, BuyerRepository $buyerRepository): Response
     {
 
-        $cities = $farmerRepository->getFarmerWithCity();
+        $cities = $farmerRepository->getFarmerWithData();
         $buyers = $buyerRepository->getBuyers();
         return $this->render('map/map.html.twig', [
             'cities' => $cities,
@@ -52,6 +52,7 @@ class MapController extends AbstractController
      * @Route("scriptdegueu", name="nepasregarder")
      * @param FarmerRepository $farmerRepository
      * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
 
     public function scriptpourriparcequeyapasgroupconcatdansDoctrine(FarmerRepository $farmerRepository, EntityManagerInterface $entityManager)
