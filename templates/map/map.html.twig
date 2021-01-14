@@ -40,9 +40,13 @@
         let lon = 1.9258559;
         let macarte = null;
         let markerClusters;
-        let locations =[];
+        let farmersLocation = [];
+        let buyersLocation = [];
         {%  for city in cities %}
-        locations.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
+        farmersLocation.push (["{{ city.city }}", {{ city.latitude }}, {{ city.longitude }}]);
+        {% endfor %}
+        {%  for buyer in buyers %}
+        buyersLocation.push (["{{ buyer.city }}", {{ buyer.latitude }}, {{ buyer.longitude }}]);
         {% endfor %}
         function initMap() {
             let iconBase = '{{ asset('/build/images/') }}';
@@ -53,16 +57,27 @@
                 minZoom: 5,
                 maxZoom: 18
             }).addTo(macarte);
-            for (let i = 0; i < locations.length; i++) {
+            for (let i = 0; i < farmersLocation.length; i++) {
                 let greenIcon = L.icon({
                     iconUrl: iconBase + 'markerGreen.58300f49.png',
-                    iconSize:     [60, 60], // size of the icon
+                    iconSize:     [40, 40], // size of the icon
                     iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
                     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
-                let marker = L.marker([locations[i][1], locations[i][2]], { icon: greenIcon });
-                marker.bindPopup(locations[i][0])
-                markerClusters.addLayer(marker);
+                let farmersMarker = L.marker([farmersLocation[i][1], farmersLocation[i][2]], { icon: greenIcon });
+                farmersMarker.bindPopup(farmersLocation[i][0])
+                markerClusters.addLayer(farmersMarker);
+            }
+            for (let i = 0; i < buyersLocation.length; i++) {
+                let orangeIcon = L.icon({
+                    iconUrl: iconBase + 'markerOrange.e34b5cfb.png',
+                    iconSize:     [40, 40], // size of the icon
+                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                });
+                let buyersMarker = L.marker([buyersLocation[i][1], buyersLocation[i][2]], { icon: orangeIcon });
+                buyersMarker.bindPopup(buyersLocation[i][0])
+                markerClusters.addLayer(buyersMarker);
             }
             macarte.addLayer(markerClusters);
             //search
