@@ -15,10 +15,15 @@ pageWrapper.addEventListener('click', event => {
     }
 });
 
-window.addEventListener('keydown', event => {
+window.addEventListener('keydown',  event => {
 
     if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
         sidebarBtn.classList.remove('active');
         sidebarBox.classList.remove('active');
     }
+});
+
+document.getElementById('map').addEventListener('click', function(){
+    sidebarBtn.classList.remove('active');
+    sidebarBox.classList.remove('active');
 });
