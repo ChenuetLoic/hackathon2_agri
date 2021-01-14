@@ -49,6 +49,20 @@ class MapController extends AbstractController
     }
 
     /**
+     * @Route("/size/{size}", name="map_by_size")
+     * @param FarmerRepository $farmerRepository
+     * @param int $size
+     * @return Response
+     */
+    public function mapShowFarmersByFarmSize(FarmerRepository $farmerRepository, int $size): Response
+    {
+        $cities = $farmerRepository->getFarmersByFarmSize($size);
+        return $this->render('map/map.html.twig', [
+            'cities' => $cities,
+        ]);
+    }
+  
+    /**
      * @Route("scriptpirequejamais", name="nepasregarder")
      * @param FarmerRepository $farmerRepository
      * @param EntityManagerInterface $entityManager
@@ -83,5 +97,4 @@ class MapController extends AbstractController
         return $this->redirectToRoute('index_map');
 
     }
-
 }
