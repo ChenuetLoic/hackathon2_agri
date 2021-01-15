@@ -7,8 +7,11 @@ use App\Form\FilterType;
 use App\Repository\BuyerRepository;
 use App\Repository\CityRepository;
 use App\Repository\FarmerRepository;
+use App\Repository\ProductRepository;
 use App\Repository\TransactionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Mukadi\ChartJSBundle\Chart\Builder;
+use Mukadi\Chart\Chart;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +22,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MapController extends AbstractController
 {
+    private const CATEGORIES_PALETTE = [
+        '#004C6D',
+        '#135B79',
+        '#256985',
+        '#387892',
+        '#4A869E',
+        '#5D95AA',
+        '#70A3B6',
+        '#82B2C2',
+        '#95C0CE',
+        '#A7CFDB',
+        '#BADDE7',
+        '#CCECF3',
+    ];
+
     /**
      * @Route ("/", name="index_map", methods={"GET", "POST"})
      * @param Request $request
@@ -26,6 +44,9 @@ class MapController extends AbstractController
      * @param FarmerRepository $farmerRepository
      * @param BuyerRepository $buyerRepository
      * @param TransactionRepository $transactionRepository
+     * @param ProductRepository $productRepository
+     * @param Builder $transactionBuilder
+     * @param Builder $transactionPriceBuilder
      * @return Response
      */
     public function indexMap(
@@ -34,7 +55,50 @@ class MapController extends AbstractController
         FarmerRepository $farmerRepository,
         BuyerRepository $buyerRepository,
         TransactionRepository $transactionRepository
+        ProductRepository $productRepository,
+        Builder $transactionBuilder,
+        Builder $transactionPriceBuilder
     ): Response {
+        $queryTransactionByCategory = $productRepository->getQueryForTransactionsByCategory();
+
+        $transactionBuilder
+            ->query($queryTransactionByCategory)
+            ->addDataSet('transactions', 'Transaction', [
+                "backgroundColor" => self::CATEGORIES_PALETTE
+            ])
+            ->labels('label');
+        $transactionChart = $transactionBuilder->buildChart('transaction-chart', Chart::BAR);
+        $transactionChart->pushOptions([
+            'legend' => ([
+                'labels' => ([
+                    'display' => '#fff',
+                    'boxWidth' => '0',
+                ]),
+            ]),
+        ]);
+
+/*        $queryAverageTransactionPrice = $productRepository->getQueryForTransactionsByCategoryWithLabels();
+
+        $transactionPriceBuilder
+            ->query($queryAverageTransactionPrice)
+            ->addDataSet('transactions', 'Transaction Average', [
+                "backgroundColor" => self::CATEGORIES_PALETTE
+            ])
+            ->labels('label');
+        $transactionPriceChart = $transactionPriceBuilder->buildChart('transaction-price-chart', Chart::DOUGHNUT);
+        $transactionPriceChart->pushOptions([
+            'legend' => ([
+                'position' => 'bottom',
+            ]),
+            'scales' => ([
+                'xAxes' => ([
+                    'gridLines' => ([
+                        'display' => 'false'
+                    ])
+                ])
+            ])
+        ]);*/
+
         $filter = new Filter();
         $form = $this->createForm(FilterType::class, $filter);
         $form->handleRequest($request);
@@ -61,7 +125,9 @@ class MapController extends AbstractController
             return $this->render('map/map.html.twig', [
                 'cities' => $farmers,
                 'buyers' => $buyersData,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'transactionChart' => $transactionChart,
+/*                'transactionPriceChart' => $transactionPriceChart,*/
             ]);
         }
 
@@ -69,7 +135,9 @@ class MapController extends AbstractController
         return $this->render('map/map.html.twig', [
             'cities' => $cities,
             'buyers' => $buyersData,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'transactionChart' => $transactionChart,
+/*            'transactionPriceChart' => $transactionPriceChart,*/
         ]);
     }
 
@@ -102,402 +170,24 @@ class MapController extends AbstractController
 //    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * @Route("scriptpirequejamais", name="nepasregarder")
      * @param FarmerRepository $farmerRepository
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function scriptpourriparcequeyapasgroupconcatdansDoctrine(FarmerRepository $farmerRepository, EntityManagerInterface $entityManager)
-    {
+    public function scriptpourriparcequeyapasgroupconcatdansDoctrine(
+        FarmerRepository $farmerRepository,
+        EntityManagerInterface $entityManager
+    ) {
 
         $comments = [
             'Presque parfait !!!!!!',
             'Comme d\'habitude ..impeccable ! Service, rapidité, efficacité . Bien à vous et à la prochaine campagne !!!',
             'Une équipe à nôtre écoute et prête à trouver le meilleur compromis pour nous satisfaire date de paiement respectée',
             'Parcours de la signature du contrat aux enlèvements et aux règlements très bien rodé. Bravo !',
-            'Bonne prestation sur les produits classiques, amélioration possible et souhaitée sur les cultures moins courantes.','La seule chose qui leurs manquent : faire monter les cours le reste est parfait ',
+            'Bonne prestation sur les produits classiques, amélioration possible et souhaitée sur les cultures moins courantes.',
+            'La seule chose qui leurs manquent : faire monter les cours le reste est parfait ',
             'RAS. je suis très comptant d\'avoir le mème contact avec qui échanger sur les ventes ou autre. Ne changé pas ce principe.',
             'personne facile a joindre bonne reactivité paiement dans les temps',
             'Je sais plus quoi écrire tellement vous êtes presque parfait ',
@@ -525,7 +215,7 @@ class MapController extends AbstractController
                 }
                 $quantity += $transaction->getQuantity();
                 $farmer->setComment($comments[array_rand($comments)]);
-                $farmer->setXpRate(rand(3,5));
+                $farmer->setXpRate(rand(3, 5));
             }
 
             $farmer->setCategory(implode(' ', array_unique($products)))

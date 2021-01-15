@@ -36,7 +36,7 @@ body {
   display: inline-block;
   width: 32px;
   z-index: 100;
-  top: 10px;
+  top: 20px;
   right: 0;
   margin-right: 11px;
   cursor: pointer;
@@ -110,9 +110,14 @@ body {
 }
 
 .container {
+  margin-left: 20px !important;
   .col-form-label {
     font-weight: $bold;
   }
+}
+
+.logo-img {
+  margin-left: 20px !important;
 }
 
 .filter-button {
@@ -184,4 +189,33 @@ body {
 [type="checkbox"]:checked + label::after {
   opacity: 1;
   transform: scale(1) rotate(0);
+}
+
+.graph {
+  background: white;
+}
+
+.title-margin {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+h3.container.title-margin, h2.container.title-margin {
+  padding-top: 20px;
+  margin-bottom: 0;
+}
+
+h2.container.title-margin {
+  color: $black;
+}
+
+.logo-img {
+  margin-bottom: 24px;
+}
+
+@media screen and (min-width: 768px){
+  #box {
+    right: -600px;
+    width: 600px;
+  }
 }
