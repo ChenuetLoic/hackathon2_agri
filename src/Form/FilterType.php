@@ -35,20 +35,20 @@ class FilterType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => true,
-                'label' => false,
+                'label' => 'Type(s) de céréale(s)',
                 'required' => false,
-                'placeholder' => false
+                'placeholder' => false,
             ])
             ->add('farmSize', ChoiceType::class, [
                 'choices' => [
                     '< 100' => '100',
                     '< 150' => '150',
                     '< 200' => '200',
-                    '< 300' => '300'
+                    'Tout' => '999'
                 ],
                 'expanded' => true,
                 'multiple' => false,
-                'label' => false,
+                'label' => 'Taille d\'exploitation (ha)',
                 'required' => false,
                 'placeholder' => false
             ])
