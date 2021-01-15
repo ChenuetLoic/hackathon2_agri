@@ -55,7 +55,7 @@ body {
 
 #btn.active {
   transition: right 500ms $easing;
-  background-color: #f6f6f6;
+  background-color: $blue;
   border: none;
   div {
     background-color: $black;
@@ -134,4 +134,54 @@ body {
 #map {
   position: relative;
   z-index: 1;
+}
+
+.form-check-label {
+  margin-left: 10px;
+}
+
+.form-check {
+  margin-top: 10px;
+}
+
+/* Aspect de la case */
+[type="checkbox"]:not(:checked) + label::before,
+[type="checkbox"]:checked + label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1px solid #aaa;
+  background: #FFF;
+  border-radius: .2em;
+  box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
+  transition: all .275s;
+}
+
+/* Aspect de la coche */
+[type="checkbox"]:not(:checked) + label::after,
+[type="checkbox"]:checked + label::after {
+  content: '✕';
+  speak: never; /* Pour être sûr que le lecteur d'écran ne lira pas "fois" */
+  position: absolute;
+  top: .48em;
+  left: .0em;
+  font-size: 1.6em;
+  color: $blue;
+  line-height: 0;
+  transition: all .2s; /* Petite transition */
+}
+
+/* Aspect non cochée */
+[type="checkbox"]:not(:checked) + label::after {
+  opacity: 0;
+  transform: scale(0) rotate(45deg);
+}
+
+/* Aspect cochée */
+[type="checkbox"]:checked + label::after {
+  opacity: 1;
+  transform: scale(1) rotate(0);
 }
