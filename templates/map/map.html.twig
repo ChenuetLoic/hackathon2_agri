@@ -16,16 +16,16 @@
     </div>
     <div id="box">
         <img class="logo-img" src="{{ asset('build/images/logo.png') }}" alt="Comparateur Agricole Logo">
-        <div id="items">
+        <div>
             <div class="container"><h2>Filtres</h2>
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
                 <button class="btn btn-warning filter-button">Filtrer</button>
                 {{ form_end(form) }}
             </div>
-            <h2>Statistiques</h2>
             <div class="graph">
-                <h3>Transactions (Tonnes)</h3>
+                <h2 class="container title-margin">Statistiques</h2>
+                <h3 class="container title-margin">Transactions (Tonnes)</h3>
             {{ mukadi_chart(transactionChart) }}
             </div>
 {#            <div class="graph"><h3>Item 3</h3>
