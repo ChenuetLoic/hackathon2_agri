@@ -72,13 +72,6 @@ class MapController extends AbstractController
                     'boxWidth' => '0',
                 ]),
             ]),
-            'scales' => ([
-                'yAxes' => ([
-                    'ticks' => ([
-                        'reverse' => 'true'
-                    ])
-                ])
-            ])
         ]);
 
 /*        $queryAverageTransactionPrice = $productRepository->getQueryForTransactionsByCategoryWithLabels();
