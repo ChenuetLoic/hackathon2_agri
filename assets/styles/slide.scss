@@ -36,7 +36,7 @@ body {
   display: inline-block;
   width: 32px;
   z-index: 100;
-  top: 10px;
+  top: 20px;
   right: 0;
   margin-right: 11px;
   cursor: pointer;
@@ -110,9 +110,14 @@ body {
 }
 
 .container {
+  margin-left: 20px !important;
   .col-form-label {
     font-weight: $bold;
   }
+}
+
+.logo-img {
+  margin-left: 20px !important;
 }
 
 .filter-button {
