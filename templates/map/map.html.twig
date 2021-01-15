@@ -22,12 +22,14 @@
                 <button class="btn btn-warning filter-button">Filtrer</button>
                 {{ form_end(form) }}
             </div>
-            <div>Item 2</div>
+            <h2>Statistiques</h2>
+            <div class="graph">
+                <h3>Transactions (Tonnes)</h3>
             {{ mukadi_chart(transactionChart) }}
-            <div>Item 3</div>
+            </div>
+{#            <div class="graph"><h3>Item 3</h3>
             {{ mukadi_chart(transactionPriceChart) }}
-            <div>Item 4</div>
-            <div>Item 5</div>
+            </div>#}
         </div>
     </div>
     <div id="map" style="height: 100vh;">

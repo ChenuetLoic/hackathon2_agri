@@ -65,21 +65,17 @@ class MapController extends AbstractController
                 "backgroundColor" => self::CATEGORIES_PALETTE
             ])
             ->labels('label');
-        $transactionChart = $transactionBuilder->buildChart('transaction-chart', Chart::DOUGHNUT);
+        $transactionChart = $transactionBuilder->buildChart('transaction-chart', Chart::BAR);
         $transactionChart->pushOptions([
             'legend' => ([
-                'position' => 'right',
+                'labels' => ([
+                    'display' => '#fff',
+                    'boxWidth' => '0',
+                ]),
             ]),
-            'scales' => ([
-                'xAxes' => ([
-                    'gridLines' => ([
-                        'display' => 'false'
-                    ])
-                ])
-            ])
         ]);
 
-        $queryAverageTransactionPrice = $productRepository->getQueryForTransactionsByCategoryWithLabels();
+/*        $queryAverageTransactionPrice = $productRepository->getQueryForTransactionsByCategoryWithLabels();
 
         $transactionPriceBuilder
             ->query($queryAverageTransactionPrice)
@@ -90,7 +86,7 @@ class MapController extends AbstractController
         $transactionPriceChart = $transactionPriceBuilder->buildChart('transaction-price-chart', Chart::DOUGHNUT);
         $transactionPriceChart->pushOptions([
             'legend' => ([
-                'position' => 'right',
+                'position' => 'bottom',
             ]),
             'scales' => ([
                 'xAxes' => ([
@@ -99,7 +95,7 @@ class MapController extends AbstractController
                     ])
                 ])
             ])
-        ]);
+        ]);*/
 
         $filter = new Filter();
         $form = $this->createForm(FilterType::class, $filter);
@@ -115,7 +111,7 @@ class MapController extends AbstractController
                 'buyers' => $buyers,
                 'form' => $form->createView(),
                 'transactionChart' => $transactionChart,
-                'transactionPriceChart' => $transactionPriceChart,
+/*                'transactionPriceChart' => $transactionPriceChart,*/
             ]);
         }
 
@@ -126,7 +122,7 @@ class MapController extends AbstractController
             'buyers' => $buyers,
             'form' => $form->createView(),
             'transactionChart' => $transactionChart,
-            'transactionPriceChart' => $transactionPriceChart,
+/*            'transactionPriceChart' => $transactionPriceChart,*/
         ]);
     }
 
