@@ -19,6 +19,23 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function getQueryForTransactionsByCategory(): string
+    {
+        return 'SELECT p.category as label, COUNT(t.id) as transactions 
+        FROM App\Entity\Product p 
+        JOIN App\Entity\Transaction t
+        WITH p.id=t.product 
+        GROUP BY p.category';
+    }
+
+    public function getQueryForTransactionsByCategoryWithLabels(): string
+    {
+        return 'SELECT CONCAT(p.category, \' prix moyen : \', AVG(t.price), \'€/t\') as label, COUNT(t.id) as transactions
+        FROM App\Entity\Product p          
+        JOIN App\Entity\Transaction t         
+        WITH p.id=t.product          
+        GROUP BY p.category';
+    }
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */
