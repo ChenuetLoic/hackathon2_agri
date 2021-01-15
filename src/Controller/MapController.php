@@ -68,7 +68,7 @@ class MapController extends AbstractController
         $transactionChart = $transactionBuilder->buildChart('transaction-chart', Chart::DOUGHNUT);
         $transactionChart->pushOptions([
             'legend' => ([
-                'position' => 'bottom',
+                'position' => 'right',
             ]),
             'scales' => ([
                 'xAxes' => ([
@@ -90,7 +90,7 @@ class MapController extends AbstractController
         $transactionPriceChart = $transactionPriceBuilder->buildChart('transaction-price-chart', Chart::DOUGHNUT);
         $transactionPriceChart->pushOptions([
             'legend' => ([
-                'position' => 'bottom',
+                'position' => 'right',
             ]),
             'scales' => ([
                 'xAxes' => ([
