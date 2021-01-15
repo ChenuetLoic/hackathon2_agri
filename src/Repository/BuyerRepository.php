@@ -22,12 +22,13 @@ class BuyerRepository extends ServiceEntityRepository
     public function getBuyers(): array
     {
         return $this->createQueryBuilder('b')
-            ->select('c.city, c.latitude, c.longitude, b.id')
+            ->select('c.city, c.latitude, c.longitude, b.id, ')
             ->join('App\Entity\City', 'c', 'WITH', 'c.id=b.city')
             ->getQuery()
             ->getResult();
 
     }
+
 
     // /**
     //  * @return Buyer[] Returns an array of Buyer objects

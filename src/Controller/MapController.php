@@ -43,6 +43,7 @@ class MapController extends AbstractController
      * @param CityRepository $cityRepository
      * @param FarmerRepository $farmerRepository
      * @param BuyerRepository $buyerRepository
+     * @param TransactionRepository $transactionRepository
      * @param ProductRepository $productRepository
      * @param Builder $transactionBuilder
      * @param Builder $transactionPriceBuilder
@@ -53,6 +54,7 @@ class MapController extends AbstractController
         CityRepository $cityRepository,
         FarmerRepository $farmerRepository,
         BuyerRepository $buyerRepository,
+        TransactionRepository $transactionRepository
         ProductRepository $productRepository,
         Builder $transactionBuilder,
         Builder $transactionPriceBuilder
@@ -101,14 +103,28 @@ class MapController extends AbstractController
         $form = $this->createForm(FilterType::class, $filter);
         $form->handleRequest($request);
 
+        $buyers = $buyerRepository->findAll();
+        $buyersData = [];
+        for($i = 0; $i < count($buyers); $i++) {
+            $buyersData[$i]['type'] = $buyers[$i]->getType();
+            $buyersData[$i]['longitude'] = $buyers[$i]->getCity()->getLongitude();
+            $buyersData[$i]['latitude'] = $buyers[$i]->getCity()->getLatitude();
+            $transactions = $transactionRepository->getTransactionData($buyers[$i]->getId());
+            for ($j = 0; $j < 5; $j++) {
+                $buyersData[$i]['trname' . $j] = $transactions[$j]['name'];
+                $buyersData[$i]['trprix' . $j] = round($transactions[$j]['avgprice'], 2);
+                $buyersData[$i]['trqt' . $j] = round($transactions[$j]['quantity']/1000, 2);
+
+            }
+            $buyersData[$i]['totalQ'] = number_format($transactionRepository->getTransactionTotal($buyers[$i]->getId())['total'], 2, ',', ' ');
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $filter = $form->getData();
             $farmers = $farmerRepository->getFilteredFarmers($filter);
-            $buyers = $buyerRepository->getBuyers();
 
             return $this->render('map/map.html.twig', [
                 'cities' => $farmers,
-                'buyers' => $buyers,
+                'buyers' => $buyersData,
                 'form' => $form->createView(),
                 'transactionChart' => $transactionChart,
 /*                'transactionPriceChart' => $transactionPriceChart,*/
@@ -116,10 +132,9 @@ class MapController extends AbstractController
         }
 
         $cities = $farmerRepository->getFarmerWithData();
-        $buyers = $buyerRepository->getBuyers();
         return $this->render('map/map.html.twig', [
             'cities' => $cities,
-            'buyers' => $buyers,
+            'buyers' => $buyersData,
             'form' => $form->createView(),
             'transactionChart' => $transactionChart,
 /*            'transactionPriceChart' => $transactionPriceChart,*/
