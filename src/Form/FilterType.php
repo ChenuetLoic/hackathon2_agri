@@ -43,7 +43,8 @@ class FilterType extends AbstractType
                 'choices' => [
                     '< 100' => '100',
                     '< 150' => '150',
-                    '< 200' => '200'
+                    '< 200' => '200',
+                    '< 300' => '300'
                 ],
                 'expanded' => true,
                 'multiple' => false,

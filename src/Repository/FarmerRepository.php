@@ -36,7 +36,7 @@ class FarmerRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('f')
             ->select('c.city, c.latitude, c.longitude, f.id, f.registerYear, f.quantitySold, f.category, f.farmSize,
          f.comment, f.xpRate')
-            ->join('App\Entity\City', 'c', 'c.id = f.city');
+            ->join('App\Entity\City', 'c', 'WITH', 'c.id = f.city');
         if (!empty($filter->getCategory())) {
             $queryBuilder = $this->getByProduct($filter, $queryBuilder);
         }
