@@ -34,6 +34,31 @@ class TransactionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getTransactionData($buyer)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('p.name, avg(t.price) as avgprice, sum(t.quantity) as quantity')
+            ->join('App\Entity\Product', 'p', 'WITH', 'p.id = t.product')
+            ->where('t.buyer = :buyer')
+            ->setParameter('buyer', $buyer)
+            ->groupBy('p.name')
+            ->orderBy('quantity', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getTransactionTotal($buyer)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('sum(t.quantity) as total')
+            ->where('t.buyer = :buyer')
+            ->setParameter('buyer', $buyer)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
     // /**
     //  * @return Transaction[] Returns an array of Transaction objects
     //  */

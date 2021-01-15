@@ -63,7 +63,27 @@
         ]);
         {% endfor %}
         {% for buyer in buyers %}
-        buyersLocation.push(["{{ buyer.city }}", {{ buyer.latitude }}, {{ buyer.longitude }}]);
+        buyersLocation.push([
+            "{{ buyer.type }}",
+            {{ buyer.latitude }},
+            {{ buyer.longitude }},
+            "{{ buyer.trname0 }}",
+            "{{ buyer.trprix0 }}",
+            "{{ buyer.trqt0 }}",
+            "{{ buyer.trname1 }}",
+            "{{ buyer.trprix1 }}",
+            "{{ buyer.trqt1 }}",
+            "{{ buyer.trname2 }}",
+            "{{ buyer.trprix2 }}",
+            "{{ buyer.trqt2 }}",
+            "{{ buyer.trname3 }}",
+            "{{ buyer.trprix3 }}",
+            "{{ buyer.trqt3 }}",
+            "{{ buyer.trname4 }}",
+            "{{ buyer.trprix4 }}",
+            "{{ buyer.trqt4 }}",
+            "{{ buyer.totalQ }}"
+        ]);
         {% endfor %}
         function initMap() {
             let iconBase = '{{ asset('/build/images/') }}';
@@ -105,6 +125,7 @@
                 markerClusters.addLayer(farmersMarker);
             }
 
+
             for (let i = 0; i < buyersLocation.length; i++) {
                 let orangeIcon = L.icon({
                     iconUrl: iconBase + 'markerOrange.e34b5cfb.png',
@@ -112,8 +133,16 @@
                     iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
                     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
                 });
+                let osef2 = '';
+
+                for (let j = 3; j < 18; j += 3) {
+
+                    osef2 += '<li class="pb-2"><span class="header-font"><b>' + buyersLocation[i][j] + ' : </b></span></br><span class="header-font">Prix moyen: ' + buyersLocation[i][j+1] + ' €/t</span></li>';
+
+                }
                 let buyersMarker = L.marker([buyersLocation[i][1], buyersLocation[i][2]], {icon: orangeIcon});
-                buyersMarker.bindPopup(buyersLocation[i][0])
+                buyersMarker.bindPopup('<p><b>' + buyersLocation[i][0] + '</b></p>' +
+                    '<p> <span class="header-font">Quantité totale achetée : </span><b>' + buyersLocation[i][18] + ' kt</b></p><p><b>Top 5 achats :</b></p><ul>' + osef2 + '</ul>')
                 markerClusters.addLayer(buyersMarker);
             }
             macarte.addLayer(markerClusters);
