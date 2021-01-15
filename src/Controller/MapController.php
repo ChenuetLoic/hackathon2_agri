@@ -64,7 +64,7 @@ class MapController extends AbstractController
                 "backgroundColor" => self::CATEGORIES_PALETTE
             ])
             ->labels('label');
-        $transactionChart = $transactionBuilder->buildChart('transaction-chart', Chart::BAR);
+        $transactionChart = $transactionBuilder->buildChart('transaction-chart', Chart::HORIZONTALBAR);
         $transactionChart->pushOptions([
             'legend' => ([
                 'labels' => ([
@@ -72,6 +72,13 @@ class MapController extends AbstractController
                     'boxWidth' => '0',
                 ]),
             ]),
+            'scales' => ([
+                'yAxes' => ([
+                    'ticks' => ([
+                        'reverse' => 'true'
+                    ])
+                ])
+            ])
         ]);
 
 /*        $queryAverageTransactionPrice = $productRepository->getQueryForTransactionsByCategoryWithLabels();
