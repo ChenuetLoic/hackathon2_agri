@@ -190,3 +190,32 @@ body {
   opacity: 1;
   transform: scale(1) rotate(0);
 }
+
+.graph {
+  background: white;
+}
+
+.title-margin {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+h3.container.title-margin, h2.container.title-margin {
+  padding-top: 20px;
+  margin-bottom: 0;
+}
+
+h2.container.title-margin {
+  color: $black;
+}
+
+.logo-img {
+  margin-bottom: 24px;
+}
+
+@media screen and (min-width: 768px){
+  #box {
+    right: -600px;
+    width: 600px;
+  }
+}
