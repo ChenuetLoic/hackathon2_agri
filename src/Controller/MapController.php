@@ -23,18 +23,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class MapController extends AbstractController
 {
     private const CATEGORIES_PALETTE = [
-        '#004C6D',
-        '#135B79',
-        '#256985',
-        '#387892',
-        '#4A869E',
-        '#5D95AA',
-        '#70A3B6',
-        '#82B2C2',
-        '#95C0CE',
-        '#A7CFDB',
-        '#BADDE7',
-        '#CCECF3',
+        '#f37f2b',
+        '#f37f2b',
+        '#f37f2b',
+        '#f37f2b',
+        '#f37f2b',
+        '#f37f2b',
+        '#f37f2b',
+        '#f37f2b',
+        '#f37f2b',
     ];
 
     /**
