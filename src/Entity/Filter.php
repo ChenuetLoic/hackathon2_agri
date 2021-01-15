@@ -25,12 +25,12 @@ class Filter
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getCategory(): array
     {
         return $this->category;
     }
 
-    public function setCategory(string $category): self
+    public function setCategory(array $category): self
     {
         $this->category = $category;
 

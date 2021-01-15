@@ -52,7 +52,7 @@ class FarmerRepository extends ServiceEntityRepository
         $queryBuilder = $queryBuilder
             ->join('App\Entity\Transaction', 't', 'WITH', 't.farmer = f.id')
             ->join('App\Entity\Product', 'p', 'WITH', 'p.id = t.product')
-            ->where('p.category = :category')
+            ->where('p.category IN (:category)')
             ->setParameter('category', $filter->getCategory());
         return $queryBuilder;
     }
@@ -60,7 +60,7 @@ class FarmerRepository extends ServiceEntityRepository
     private function getByFarmSize(Filter $filter, QueryBuilder $queryBuilder)
     {
         $queryBuilder = $queryBuilder
-            ->andWhere('r.farmSize :size')
+            ->andWhere('f.farmSize < :size')
             ->setParameter('size', $filter->getFarmSize());
         return $queryBuilder;
     }

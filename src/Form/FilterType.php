@@ -13,16 +13,26 @@ class FilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('role', ChoiceType::class, [
-                'choices' => ['Agriculteurs', 'Acheteurs'],
-                'expanded' => true,
-                'multiple' => true,
-                'label' => false,
-                'required' => false,
-                'placeholder' => false
-            ])
+//            ->add('role', ChoiceType::class, [
+//                'choices' => ['Agriculteurs', 'Acheteurs'],
+//                'expanded' => true,
+//                'multiple' => true,
+//                'label' => false,
+//                'required' => false,
+//                'placeholder' => false
+//            ])
             ->add('category', ChoiceType::class, [
-                'choices' => ['Blé', 'Avoine', 'Triticale', 'Orge', 'Maïs', 'Pois', 'Colza', 'Tournesol', 'Féverole'],
+                'choices' => [
+                    'Blé' => 'ble',
+                    'Avoine' => 'avoine',
+                    'Triticale' => 'triticale',
+                    'Orge' => 'orge',
+                    'Maïs' => 'mais',
+                    'Pois' => 'pois',
+                    'Colza' => 'colza',
+                    'Tournesol' => 'tournesol',
+                    'Féverole' => 'feverol'
+                ],
                 'expanded' => true,
                 'multiple' => true,
                 'label' => false,
@@ -30,7 +40,11 @@ class FilterType extends AbstractType
                 'placeholder' => false
             ])
             ->add('farmSize', ChoiceType::class, [
-                'choices' => ['< 100', '< 150', '< 200'],
+                'choices' => [
+                    '< 100' => '100',
+                    '< 150' => '150',
+                    '< 200' => '200'
+                ],
                 'expanded' => true,
                 'multiple' => false,
                 'label' => false,

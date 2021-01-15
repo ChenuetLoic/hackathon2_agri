@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MapController extends AbstractController
 {
     /**
-     * @Route ("/", name="index_map", methods={"GET"})
+     * @Route ("/", name="index_map", methods={"GET", "POST"})
      * @param Request $request
      * @param CityRepository $cityRepository
      * @param FarmerRepository $farmerRepository
@@ -58,33 +58,33 @@ class MapController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/category/{category}", name="map_by_cereal")
-     * @param TransactionRepository $transactionRepository
-     * @param $category
-     * @return Response
-     */
-    public function mapShowFarmersByCereal(TransactionRepository $transactionRepository, string $category): Response
-    {
-        $cities = $transactionRepository->getFarmersByProduct($category);
-        return $this->render('map/map.html.twig', [
-            'cities' => $cities,
-        ]);
-    }
+//    /**
+//     * @Route("/category/{category}", name="map_by_cereal")
+//     * @param TransactionRepository $transactionRepository
+//     * @param $category
+//     * @return Response
+//     */
+//    public function mapShowFarmersByCereal(TransactionRepository $transactionRepository, string $category): Response
+//    {
+//        $cities = $transactionRepository->getFarmersByProduct($category);
+//        return $this->render('map/map.html.twig', [
+//            'cities' => $cities,
+//        ]);
+//    }
 
-    /**
-     * @Route("/size/{size}", name="map_by_size")
-     * @param FarmerRepository $farmerRepository
-     * @param int $size
-     * @return Response
-     */
-    public function mapShowFarmersByFarmSize(FarmerRepository $farmerRepository, int $size): Response
-    {
-        $cities = $farmerRepository->getFarmersByFarmSize($size);
-        return $this->render('map/map.html.twig', [
-            'cities' => $cities,
-        ]);
-    }
+//    /**
+//     * @Route("/size/{size}", name="map_by_size")
+//     * @param FarmerRepository $farmerRepository
+//     * @param int $size
+//     * @return Response
+//     */
+//    public function mapShowFarmersByFarmSize(FarmerRepository $farmerRepository, int $size): Response
+//    {
+//        $cities = $farmerRepository->getFarmersByFarmSize($size);
+//        return $this->render('map/map.html.twig', [
+//            'cities' => $cities,
+//        ]);
+//    }
 
 
 
@@ -492,7 +492,7 @@ class MapController extends AbstractController
             'RAS',
             'Bonjour votre entreprise est réactif à l\'écoute et évolutif il faut continuer dans la perspective de nous accompagner. Très bien',
         ];
-      
+
         $farmers = $farmerRepository->findAll();
         $categories = [];
         foreach ($farmers as $farmer) {
