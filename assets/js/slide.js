@@ -27,3 +27,20 @@ document.getElementById('map').addEventListener('click', function(){
     sidebarBtn.classList.remove('active');
     sidebarBox.classList.remove('active');
 });
+
+const sidebarBox1 = document.querySelector('#box1'),
+    sidebarBtn1 = document.querySelector('#btn1'),
+    pageWrapper1 = document.querySelector('#page-wrapper1');
+
+sidebarBtn1.addEventListener('click', event => {
+    sidebarBtn1.classList.toggle('active');
+    sidebarBox1.classList.toggle('active');
+});
+
+pageWrapper1.addEventListener('click', event => {
+
+    if (sidebarBox1.classList.contains('active')) {
+        sidebarBtn1.classList.remove('active');
+        sidebarBox1.classList.remove('active');
+    }
+});

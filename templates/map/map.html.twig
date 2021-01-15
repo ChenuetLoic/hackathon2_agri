@@ -15,12 +15,58 @@
         <div id='bottom'></div>
     </div>
     <div id="box">
-        <div id="items">
-            <div class="container"><h2>Filtres</h2>
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                <button class="btn btn-warning filter-button">Filtrer</button>
-                {{ form_end(form) }}
+            <div id="items">
+                <section id="section">
+                    <div class="flex-container">
+                        <div class="flex-row title">
+
+                        </div>
+                        <div class="why_choose_us">
+                            <input type="radio" id="Panel_1" name="wiki" value="Panel_1" checked>
+                            <input type="radio" id="Panel_2" name="wiki" value="Panel_2">
+
+                            <ul class="accordion flex-row">
+                                    <li class="panel" data-radio="Panel_1">
+                                        <label for="Panel_1" class="accordion-title">
+                                            <span class="accordion-heading">Filtre</span>
+                                        </label>
+                                        <div class="accordion-content">
+                                            <div class="container"><h2>Filtres</h2>
+                                                {{ form_start(form) }}
+                                                {{ form_widget(form) }}
+                                                <button class="btn btn-warning filter-button">Filtrer</button>
+                                                {{ form_end(form) }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="panel" data-radio="Panel_2">
+                                        <label for="Panel_2" class="accordion-title">
+
+                                            <span class="accordion-heading"></span>
+                                        </label>
+                                        <div class="accordion-content">
+                                            <div class="container"><h2>Filtres</h2>
+                                          <div>
+                                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dicta neque quidem quis repellat temporibus vero! Consectetur ducimus eius expedita ipsa magnam minima nam officia perferendis, quisquam sit soluta vitae.
+                                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dicta neque quidem quis repellat temporibus vero! Consectetur ducimus eius expedita ipsa magnam minima nam officia perferendis, quisquam sit soluta vitae.
+                                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dicta neque quidem quis repellat temporibus vero! Consectetur ducimus eius expedita ipsa magnam minima nam officia perferendis, quisquam sit soluta vitae.
+                                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dicta neque quidem quis repellat temporibus vero! Consectetur ducimus eius expedita ipsa magnam minima nam officia perferendis, quisquam sit soluta vitae.
+                                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dicta neque quidem quis repellat temporibus vero! Consectetur ducimus eius expedita ipsa magnam minima nam officia perferendis, quisquam sit soluta vitae.
+                                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dicta neque quidem quis repellat temporibus vero! Consectetur ducimus eius expedita ipsa magnam minima nam officia perferendis, quisquam sit soluta vitae.
+                                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dicta neque quidem quis repellat temporibus vero! Consectetur ducimus eius expedita ipsa magnam minima nam officia perferendis, quisquam sit soluta vitae.
+
+                                          </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </div>
     </div>
@@ -31,6 +77,9 @@
         <p class="farmers">Agriculteurs</p>
         <p class="buyers">Acheteurs</p>
     </div>
+
+
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
