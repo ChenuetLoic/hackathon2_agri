@@ -57,7 +57,7 @@ class FarmerRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
 
-    private function getByFarmSize(Filter $filter, QueryBuilder $queryBuilder)
+    private function getByFarmSize(Filter $filter, QueryBuilder $queryBuilder): QueryBuilder
     {
         $queryBuilder = $queryBuilder
             ->andWhere('f.farmSize < :size')

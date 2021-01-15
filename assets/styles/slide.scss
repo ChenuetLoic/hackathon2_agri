@@ -1,3 +1,5 @@
+@import 'variables.scss';
+
 $black: #343838;
 $blue: #5a9449;
 $dullWhite: #f6f6f6;
@@ -72,7 +74,7 @@ body {
 
 #box {
   position: fixed;
-  z-index: 4;
+  z-index: 6;
   overflow: auto;
   top: 0px;
   right: -350px;
@@ -80,9 +82,10 @@ body {
   opacity: 0;
   padding: 20px 0px;
   height: 100%;
-  background-color: $dullWhite;
-  color: $black;
+  background-color: $primary;
+  color: $dullWhite;
   transition: all 350ms $easing;
+  font-family: $default-font-family;
 }
 
 #box.active {
@@ -96,8 +99,7 @@ body {
   transform: translateY(-50%);
   .item {
     position: relative;
-    cursor: pointer;
-    font-size: 2em;
+    font-size: 1.5em;
     padding: 15px 30px;
     transition: all 250ms;
     &:hover {
@@ -105,6 +107,20 @@ body {
       background-color: transparentize($black, .8);
     }
   }
+}
+
+.container {
+  .col-form-label {
+    font-weight: $bold;
+  }
+}
+
+.filter-button {
+  background-color: $warning;
+  border-radius: 4px;
+  font-family: $header-font-family;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  color: $dullWhite !important;
 }
 
 #btn, #btn * {
