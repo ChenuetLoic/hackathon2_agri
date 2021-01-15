@@ -54,7 +54,7 @@ class MapController extends AbstractController
         CityRepository $cityRepository,
         FarmerRepository $farmerRepository,
         BuyerRepository $buyerRepository,
-        TransactionRepository $transactionRepository
+        TransactionRepository $transactionRepository,
         ProductRepository $productRepository,
         Builder $transactionBuilder,
         Builder $transactionPriceBuilder
